@@ -16,8 +16,6 @@ public:
 public:
 	float Norm();
 	
-	//Nabil and Rudy: Implement Operators for +, -, *, / and = pls
-
 	friend CVec3 operator+(const CVec3 &v1, const CVec3 &v2);
 	friend CVec3 operator-(const CVec3 &v1, const CVec3 &v2);
 
@@ -27,9 +25,7 @@ public:
 	friend CVec3 operator/(const CVec3 &v, const float f);
 	friend CVec3 operator/(const float f, const CVec3 &v);
 	
-	const CVec3 & operator=(const CVec3 &v);
-	
-
+	CVec3 & operator=(const CVec3 &v);
 };
 
 
