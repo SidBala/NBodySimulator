@@ -5,7 +5,9 @@ class CVec3
 public:
 	CVec3(void);
 	CVec3(float nx,float ny,float nz);
+	CVec3 (const CVec3 & temp);
 	~CVec3(void);
+
 public:
 	float x;
 	float y;
@@ -25,7 +27,7 @@ public:
 	friend CVec3 operator/(const CVec3 &v, const float f);
 	friend CVec3 operator/(const float f, const CVec3 &v);
 	
-	CVec3 operator= (CVec3 v);
+	const CVec3 & operator=(const CVec3 &v);
 	
 
 };
