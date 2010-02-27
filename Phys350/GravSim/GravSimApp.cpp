@@ -5,6 +5,7 @@
 #include "DisplaySettingsDlg.h"
 #include <io.h>
 #include <fcntl.h>
+#include "PlanetDefs.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -49,6 +50,19 @@ CGravSimApp::CGravSimApp()
 	m_mouseLeftDown = false;
 	
 	memset( keyDown , 0 , 256 );				// reset all keys
+
+	//Insert some planets into the Object List
+	CPlanetEarth* m_Earth = new CPlanetEarth;
+	CPlanetSun* m_Sun = new CPlanetSun;
+	CPlanetVenus* m_Venus = new CPlanetVenus;
+	
+	m_objList.push_back(m_Earth);
+	m_objList.push_back(m_Sun);
+	m_objList.push_back(m_Venus);
+
+
+
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -167,10 +181,12 @@ BOOL CGravSimApp::InitInstance()
 						else											// If Window Is Visible
 						{
 							// Process Application Loop
-							tickCount = GetTickCount ();				// Get The Tick Count
-							m_appMain.Update (tickCount - m_lastTickCount);	// Update The Counter
+							tickCount = GetTickCount ();									// Get The Tick Count
+							m_appMain.Update (tickCount - m_lastTickCount);					// Update The Counter
+							m_objSim.SimUpdate (tickCount - m_lastTickCount, &m_objList);	//	Update the Simulation
+
 							m_lastTickCount = tickCount;			// Set Last Count To Current Count
-							m_appMain.Draw ();									// Draw Our Scene
+							m_appMain.Draw (&m_objList);									// Draw Our Scene
 							
 
 							SwapBuffers (m_pDC->m_hDC);					// Swap Buffers (Double Buffering)
@@ -183,6 +199,16 @@ BOOL CGravSimApp::InitInstance()
 			m_appMain.Deinitialize ();											// User Defined DeInitialization
 
 			DestroyOpenGLWindow ();									// Destroy The Active Window
+			//Destroy Planet Objects
+			std::vector<CGravObject*>::iterator	i;
+			for(i = m_objList.begin(); i != m_objList.end() ; i++)				//	Delete all planet objects
+			{
+				CGravObject * CurrentObj = m_objList.back();
+				m_objList.pop_back();
+				delete CurrentObj;
+			}
+
+
 		}
 		else															// If Window Creation Failed
 		{

@@ -27,10 +27,12 @@ CVec3::~CVec3(void)									//	Nothing to do here. No dynamic memory
 
 float CVec3::Norm()									//	Returns the 2-Norm of the vector
 {
-	float norm;
-	norm = sqrt(x*x + y*y + z*z);
-	return norm;
-	
+	return (float) sqrt(x*x + y*y + z*z);
+}
+
+float CVec3::NormSq()
+{
+	return (float)(x*x + y*y + z*z);
 }
 
 CVec3 & CVec3::operator=(const CVec3 &v)						// Assignment Operator
@@ -103,5 +105,6 @@ CGravObject::~CGravObject(void)
 
 void CGravObject::DrawObject(void)
 {
+	printf("\n BaseClass DrawObject");
 
 }

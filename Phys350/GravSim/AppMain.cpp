@@ -5,6 +5,7 @@
 #include "DisplayWindow.h"
 #include "AppMain.h"
 
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -19,6 +20,8 @@ static float angle=0,rot1,rot2;
 
 CMain::CMain()
 {
+	fTransX = fTransY = fTransZ = 0;
+	fRotX = fRotY = fRotZ = 0;
 	// Start Of User Initialization	
 }
 
@@ -101,16 +104,26 @@ void CMain::Update(DWORD milliseconds)
 // Function name	: CMain::Draw
 // Description	    : this function will draw (blt) your opengl scene to the window
 // Return type		: void 
-void CMain::Draw()
+void CMain::Draw(std::vector<CGravObject*> *ObjList)
 {
 	glMatrixMode (GL_MODELVIEW);
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear Screen And Depth Buffer
 	glLoadIdentity ();											// Reset The Modelview Matrix
 	
-	glTranslatef (0.0f, 0.0f, -12.0f);							// Translate 6 Units Into The Screen
-	glRotatef (angle, 0.0f, 1.0f, 0.0f);						// Rotate On The Y-Axis By angle
+	//glTranslatef (0.0f, 0.0f, -12.0f);							// Translate 6 Units Into The Screen
+	//glRotatef (angle, 0.0f, 1.0f, 0.0f);						// Rotate On The Y-Axis By angle
 
-	for (rot1=0; rot1<2; rot1++)								// 2 Passes
+
+	std::vector<CGravObject*>::iterator	i;
+
+	for(i = ObjList->begin(); i != ObjList->end() ; i++)
+	{
+		glLoadIdentity ();	
+		//glTranslatef(fTransX,fTransY,fTransZ);
+		glTranslatef(0,0,-12);
+		(*i)->DrawObject();
+	}
+	/*for (rot1=0; rot1<2; rot1++)								// 2 Passes
 	{
 		glRotatef(90.0f,0.0f,1.0f,0.0f);						// Rotate 90 Degrees On The Y-Axis
 		glRotatef(180.0f,1.0f,0.0f,0.0f);						// Rotate 180 Degress On The X-Axis
@@ -124,7 +137,7 @@ void CMain::Draw()
 			glEnd ();
 			// Done Drawing Triangles
 		}
-	}
+	}*/
 
 	// Draw a 2D surface For UI Elements
 	glMatrixMode (GL_MODELVIEW);

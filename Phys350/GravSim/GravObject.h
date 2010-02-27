@@ -15,6 +15,7 @@ public:
 
 public:
 	float Norm();
+	float NormSq();
 	
 	friend CVec3 operator+(const CVec3 &v1, const CVec3 &v2);
 	friend CVec3 operator-(const CVec3 &v1, const CVec3 &v2);

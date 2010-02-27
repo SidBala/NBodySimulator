@@ -11,6 +11,8 @@
 //
 #include "DisplayWindow.h"
 #include "AppMain.h"
+#include "ObjectSim.h"
+
 
 class CGravSimApp : public CWinApp
 {
@@ -27,6 +29,10 @@ public:
 
 	CDisplayWindow	m_wndMain;
 	CMain		m_appMain;
+	CObjectSim	m_objSim;
+
+	std::vector <CGravObject*> m_objList;
+	
 	BOOL		m_isProgramLooping;
 	BOOL		m_createFullScreen;
 

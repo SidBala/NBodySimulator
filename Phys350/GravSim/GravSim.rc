@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -21,7 +21,6 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
 #endif //_WIN32
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -42,17 +41,16 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "040904B0"
+        BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "NeheMFC MFC Application\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "NeheMFC\0"
-            VALUE "LegalCopyright", "Copyright (C) 2004\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "NeheMFC.EXE\0"
-            VALUE "ProductName", "NeheMFC Application\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "CompanyName", "TeamPwnage"
+            VALUE "FileDescription", "Team Pwnage Gravity Simulator"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "GravSim"
+            VALUE "LegalCopyright", "Copyright (C) 2010"
+            VALUE "OriginalFilename", "GravSim"
+            VALUE "ProductName", "Team Pwnage Gravity Simulator"
+            VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -61,15 +59,13 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     IDS_ABOUTBOX            "&About NeheMFC..."
 END
@@ -92,18 +88,15 @@ LANGUAGE LANG_DUTCH, SUBLANG_DUTCH
 // Dialog
 //
 
-IDD_DISPLAY_SETTINGS DIALOG DISCARDABLE  0, 0, 150, 111
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_DISPLAY_SETTINGS DIALOG  0, 0, 150, 111
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Display settings"
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,75,91,65,15
-    COMBOBOX        IDC_RESOLUTIONS,5,15,140,70,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    CONTROL         "&Fullscreen",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,6,54,135,10
-    CONTROL         "&Don't ask again",IDC_DONTASKAGAIN,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,5,70,135,10
+    COMBOBOX        IDC_RESOLUTIONS,5,15,140,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Fullscreen",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,54,135,10
+    CONTROL         "&Don't ask again",IDC_DONTASKAGAIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,70,135,10
     PUSHBUTTON      "Cancel",IDCANCEL,10,91,50,15
     GROUPBOX        "Resolution",IDC_STATIC,0,0,150,35
     GROUPBOX        "Other",IDC_STATIC,0,40,150,45
@@ -116,7 +109,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO 
 BEGIN
     IDD_DISPLAY_SETTINGS, DIALOG
     BEGIN
@@ -135,18 +128,18 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -174,7 +167,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\GravSim.ico"
+IDR_MAINFRAME           ICON                    "res\\GravSim.ico"
 #endif    // Dutch (Netherlands) resources
 /////////////////////////////////////////////////////////////////////////////
 

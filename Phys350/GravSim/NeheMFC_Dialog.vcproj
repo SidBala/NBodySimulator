@@ -263,6 +263,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PerfTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PlanetDefs.cpp"
+				>
+			</File>
+			<File
 				RelativePath="StdAfx.cpp"
 				>
 				<FileConfiguration
@@ -315,6 +323,14 @@
 			</File>
 			<File
 				RelativePath=".\ObjectSim.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PerfTool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PlanetDefs.h"
 				>
 			</File>
 			<File
