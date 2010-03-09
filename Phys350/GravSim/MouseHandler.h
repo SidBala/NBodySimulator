@@ -8,9 +8,11 @@ public:
 	bool m_MouseUp;
 
 	CPoint m_CurrentPos;
+	CPoint m_LastPos;
 	CPoint m_DragBegin;
 	
 public:
+
 	CMouseHandler(void);
 	~CMouseHandler(void);
 };

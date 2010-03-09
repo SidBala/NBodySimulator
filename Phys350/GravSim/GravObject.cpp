@@ -105,6 +105,6 @@ CGravObject::~CGravObject(void)
 
 void CGravObject::DrawObject(void)
 {
-	printf("\n BaseClass DrawObject");
+	printf("\n BaseClass DrawObject DO NOT USE");
 
 }
