@@ -30,7 +30,7 @@ CPlanetSun::CPlanetSun(void)
 	v3Vf = CVec3(0,0,0);			//	Give object an initial velocity
 	
 	fMass = 500;					//	Give object a mass
-	fRadius = 0.5;					//	Give object a radius
+	fRadius = 0.2;					//	Give object a radius
 
 }
 CPlanetSun::~CPlanetSun(void)
@@ -40,7 +40,7 @@ CPlanetSun::~CPlanetSun(void)
 }
 void CPlanetSun::DrawObject(void)
 {
-	printf("\nSunPos x:%f y:%f z:%f",v3Pf.x,v3Pf.y,v3Pf.z);
+	//printf("\nSunPos x:%f y:%f z:%f",v3Pf.x,v3Pf.y,v3Pf.z);
 
 	//glLoadIdentity();
 
@@ -75,7 +75,7 @@ CPlanetEarth::~CPlanetEarth(void)
 }
 void CPlanetEarth::DrawObject(void)
 {
-		printf("\nEarthPos x:%f y:%f z:%f",v3Pf.x,v3Pf.y,v3Pf.z);
+		//printf("\nEarthPos x:%f y:%f z:%f",v3Pf.x,v3Pf.y,v3Pf.z);
 
 	//glLoadIdentity();
 
@@ -113,7 +113,7 @@ CPlanetVenus::~CPlanetVenus(void)
 }
 void CPlanetVenus::DrawObject(void)
 {
-		printf("\nVenusPos x:%f y:%f z:%f",v3Pf.x,v3Pf.y,v3Pf.z);
+		//printf("\nVenusPos x:%f y:%f z:%f",v3Pf.x,v3Pf.y,v3Pf.z);
 	//glLoadIdentity();
 	glTranslatef(v3Pf.x,v3Pf.y,v3Pf.z);
 

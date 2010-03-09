@@ -97,6 +97,8 @@ BOOL CGravSimApp::InitInstance()
 	*stdout = *fp;
 	setvbuf( stdout, NULL, _IONBF, 0 );
 	printf("Console Started");
+	
+	
 	AfxEnableControlContainer();
 
 	// Standard initialization
@@ -182,11 +184,14 @@ BOOL CGravSimApp::InitInstance()
 						{
 							// Process Application Loop
 							tickCount = GetTickCount ();									// Get The Tick Count
-							m_appMain.Update (tickCount - m_lastTickCount);					// Update The Counter
+							m_appMain.Update (tickCount - m_lastTickCount);				    // Update The Counter
+
 							m_objSim.SimUpdate (tickCount - m_lastTickCount, &m_objList);	//	Update the Simulation
 
 							m_lastTickCount = tickCount;			// Set Last Count To Current Count
+
 							m_appMain.Draw (&m_objList);									// Draw Our Scene
+
 							
 
 							SwapBuffers (m_pDC->m_hDC);					// Swap Buffers (Double Buffering)
@@ -196,17 +201,19 @@ BOOL CGravSimApp::InitInstance()
 			}															// If (Initialize (...
 
 			// Application Is Finished
-			m_appMain.Deinitialize ();											// User Defined DeInitialization
-
+			m_appMain.Deinitialize ();								// User Defined DeInitialization
 			DestroyOpenGLWindow ();									// Destroy The Active Window
+
 			//Destroy Planet Objects
 			std::vector<CGravObject*>::iterator	i;
+			printf("\nDeleting Objects Now");
 			for(i = m_objList.begin(); i != m_objList.end() ; i++)				//	Delete all planet objects
 			{
-				CGravObject * CurrentObj = m_objList.back();
-				m_objList.pop_back();
+				CGravObject * CurrentObj = *i;
 				delete CurrentObj;
+				*i = 0;
 			}
+
 
 
 		}
