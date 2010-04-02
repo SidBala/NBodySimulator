@@ -27,6 +27,8 @@
 
 
 
+
+
 #ifndef _AFX_NO_OLE_SUPPORT
 #include <afxdtctl.h>           // MFC support for Internet Explorer 4 Common Controls
 #endif
@@ -34,8 +36,10 @@
 #include <afxcmn.h>                     // MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
-#include <gl/gl.h>														// Header File For The OpenGL32 Library
+#include "Include/GL/glew.h"														// Header File For The OpenGL32 Library
 #include <gl/glu.h>														// Header File For The GLu32 Library
+
+#include <string>
 
 
 

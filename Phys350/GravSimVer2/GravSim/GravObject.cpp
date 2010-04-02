@@ -97,55 +97,43 @@ CVec3 operator/(const CVec3 &v, const float f)
 
 CGravObject::CGravObject(void)
 {
+	Quadric = gluNewQuadric();
 }
 
 CGravObject::~CGravObject(void)
 {
+	gluDeleteQuadric(Quadric);
 }
 
 void CGravObject::DrawObject(void)
 {
-		glTranslatef(v3Pf.x,v3Pf.y,v3Pf.z);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	
-		glBegin(GL_QUADS);
+	glPushMatrix();
+	glTranslatef(v3Pf.x,v3Pf.y,v3Pf.z);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	
-			 //front side
-			glColor3f(1,0,0);	glVertex3f( fRadius,  fRadius, fRadius);
-			glColor3f(1,0,0);	glVertex3f(-fRadius,  fRadius, fRadius);
-			glColor3f(1,0,0);	glVertex3f(-fRadius, -fRadius, fRadius);
-			glColor3f(1,0,0);	glVertex3f( fRadius, -fRadius, fRadius);
+	//glRenderMode(GL_wirefram
+	glColor3f(1,1,1);
+	gluSphere(Quadric,fRadius,50,50);
 
-			// back side
-			glColor3f(0,0,1);	glVertex3f(-fRadius, -fRadius, -fRadius);
-			glColor3f(0,0,1);	glVertex3f(-fRadius,  fRadius, -fRadius);
-			glColor3f(0,0,1);	glVertex3f( fRadius,  fRadius, -fRadius);
-			glColor3f(0,0,1);	glVertex3f( fRadius, -fRadius, -fRadius);
+	glPopMatrix();
 
-			// top side
-			glColor3f(0,1,0);	glVertex3f( fRadius, fRadius,  fRadius);
-			glColor3f(0,1,0);	glVertex3f( fRadius, fRadius, -fRadius);
-			glColor3f(0,1,0);	glVertex3f(-fRadius, fRadius, -fRadius);
-			glColor3f(0,1,0);	glVertex3f(-fRadius, fRadius,  fRadius);
+	//Draw Trails Now
+	std::vector<CVec3>::iterator i;
+	std::vector<CVec3>::iterator j;
 
-			// bottom side
-			glColor3f(1,1,0);	glVertex3f(-fRadius, -fRadius, -fRadius);
-			glColor3f(1,1,0);	glVertex3f( fRadius, -fRadius, -fRadius);
-			glColor3f(1,1,0);	glVertex3f( fRadius, -fRadius,  fRadius);
-			glColor3f(1,1,0);	glVertex3f(-fRadius, -fRadius,  fRadius);
+	if(Trails.size() > 2)
+	{
+		for(i =Trails.begin(); i != Trails.end()-1; i++)
+		{
+			j=(i+1);
+			
+			glBegin(GL_LINES);
+			glColor3f(0,1,1); glVertex3f(i->x,i->y,i->z); glVertex3f(j->x,j->y,j->z);
+			glEnd();
+		}
 
-			// right side
-			glColor3f(1,0,1);	glVertex3f( fRadius,  fRadius,  fRadius);
-			glColor3f(1,0,1);	glVertex3f( fRadius, -fRadius,  fRadius);
-			glColor3f(1,0,1);	glVertex3f( fRadius, -fRadius, -fRadius);
-			glColor3f(1,0,1);	glVertex3f( fRadius,  fRadius, -fRadius);
+	}
 
-			// left side
-			glColor3f(0,1,1);	glVertex3f(-fRadius, -fRadius, -fRadius);
-			glColor3f(0,1,1);	glVertex3f(-fRadius, -fRadius,  fRadius);
-			glColor3f(0,1,1);	glVertex3f(-fRadius,  fRadius,  fRadius);
-			glColor3f(0,1,1);	glVertex3f(-fRadius,  fRadius, -fRadius);
-	glEnd();
+
 
 }

@@ -5,6 +5,7 @@
 //class CVec3;
 
 static const float G = 0.1f;					//	Gravitational Constant
+static int TrailLength = 200;
 
 CObjectSim::CObjectSim(void)
 {
@@ -18,6 +19,7 @@ CObjectSim::~CObjectSim(void)
 void CObjectSim::SimUpdate(DWORD milliseconds, std::vector<CGravObject*> *ObjList)
 {
 	//PerfObjectSim.Start();					// Start the Performance Counter
+
 
 	std::vector<CGravObject*>::iterator	i;
 	std::vector<CGravObject*>::iterator	j;
@@ -34,6 +36,14 @@ void CObjectSim::SimUpdate(DWORD milliseconds, std::vector<CGravObject*> *ObjLis
 	{
 		(*i)->v3Pi = (*i)->v3Pf;
 		(*i)->v3Vi = (*i)->v3Vf;
+
+		//Add Trails here
+
+		if((*i)->Trails.size() == TrailLength)
+		{
+			(*i)->Trails.erase((*i)->Trails.begin());
+		}
+		(*i)->Trails.insert((*i)->Trails.end(),(*i)->v3Pf);
 	}
 
 	for(i = ObjList->begin(); i != ObjList->end() ; i++)
@@ -62,6 +72,5 @@ void CObjectSim::SimUpdate(DWORD milliseconds, std::vector<CGravObject*> *ObjLis
 		(*i)->v3Vf = (*i)->v3Vi + (v3Acc * dt);
 		(*i)->v3Pf = (*i)->v3Pi + ((*i)->v3Vf * dt);
 	}
-
 	//PerfObjectSim.Log();
 }
