@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "OpenGLControl.h"
 #include ".\openglcontrol.h"
+#include "SOIL\SOIL.h"
+
+
+
 
 COpenGLControl::COpenGLControl(void)
 {
@@ -229,13 +233,16 @@ void COpenGLControl::oglInitialize(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClearDepth(1.0f);
 
-	// Turn on backface culling
-	glFrontFace(GL_CCW);
-	glCullFace(GL_BACK);
-	
-	// Turn on depth testing
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_TEXTURE_2D);							// Enable Texture Mapping ( NEW )
+	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
+	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);				// Black Background
+	glClearDepth(1.0f);									// Depth Buffer Setup
+	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
+	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
+
+	// Build Textures
+	oglLoadSkyBoxTextures();
 
 	// Send draw request
 	OnDraw(NULL);
@@ -258,6 +265,7 @@ void COpenGLControl::oglDrawScene(std::vector<CGravObject*> *ObjList)
 		glRotatef(m_fRotY, 0.0f, 1.0f, 0.0f);		//	Camera Controls - Rotation Y
 
 		//Draw Rulers
+		oglRenderSkybox(CVec3(0,0,0),CVec3(1000,1000,1000));
 
 		glBegin(GL_LINES);
 		glColor3f(0,0,1); glVertex3f(-10,0,0); glVertex3f(10,0,0);
@@ -270,6 +278,8 @@ void COpenGLControl::oglDrawScene(std::vector<CGravObject*> *ObjList)
 		glBegin(GL_LINES);
 		glColor3f(1,0,0); glVertex3f(0,0,-10); glVertex3f(0,0,10);
 		glEnd();
+
+		
 
 
 		//glLoadIdentity();
@@ -336,4 +346,341 @@ void COpenGLControl::oglDrawScene(std::vector<CGravObject*> *ObjList)
 	//glend();
 
 	SwapBuffers(hdc);
+}
+/*
+void COpenGLControl::oglRenderSkybox(CVec3 position,CVec3 size)
+{	
+
+	// Begin DrawSkyTex
+	glColor4f(1.0, 1.0, 1.0,1.0f);
+ 
+	// Save Current Matrix
+	
+	glPushMatrix();
+
+	
+	//glEnable(GL_TEXTURE_CUBE_MAP);
+	// Second Move the render space to the correct position (Translate)
+	glTranslatef(position.x,position.y,position.z);
+ 
+
+	// First apply scale matrix
+	//glScalef(size.x,size.y,size.z);
+ 
+	float cz = -0.0f,cx = 1.0f;
+	float r = 1.0f; // If you have border issues change this to 1.005f
+
+//	glBindTexture(GL_TEXTURE_CUBE_MAP ,SkyTex[0]);
+
+
+	//GLfloat params[] = {0,0,0,1};
+	//glTexGenfv(GL_S, GL_OBJECT_PLANE, params);
+	//glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+	//glEnable(GL_TEXTURE_GEN_S);
+
+	//glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR); 
+	//glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR); 
+	//glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR); 
+
+	//glEnable(GL_TEXTURE_GEN_S); 
+	//glEnable(GL_TEXTURE_GEN_T); 
+	//glEnable(GL_TEXTURE_GEN_R);
+	    	
+
+	// Common Axis Z - UP Side
+	glBindTexture(GL_TEXTURE_2D,SkyTex[4]);
+	glBegin(GL_QUADS);	
+	//glNormal3f( 0.0f, 0.5f, 0.0f);	
+		glTexCoord2f(cx, cz); 
+		glVertex3f(-r ,1.0f,-r); 
+		glTexCoord2f(cx,  cx);
+		glVertex3f(-r,1.0f,r);
+		glTexCoord2f(cz,  cx);
+		glVertex3f( r,1.0f,r); 
+		glTexCoord2f(cz, cz);
+		glVertex3f( r ,1.0f,-r);
+	glEnd();
+ 
+	// Common Axis Z - DN side
+	glBindTexture(GL_TEXTURE_2D,SkyTex[5]);
+	glBegin(GL_QUADS);		
+		glTexCoord2f(cx,cz); 
+		glVertex3f(-r,-1.0f,-r);
+		glTexCoord2f(cx,cx); 
+		glVertex3f(-r,-1.0f, r);
+		glTexCoord2f(cz,cx); 
+		glVertex3f( r,-1.0f, r); 
+		glTexCoord2f(cz,cz); 
+		glVertex3f( r,-1.0f,-r);
+	glEnd();
+ 
+	// Common Axis X - LT
+	glBindTexture(GL_TEXTURE_2D,SkyTex[3]);
+	glBegin(GL_QUADS);		
+		glTexCoord2f(cx,cx);
+		glVertex3f(-1.0f, -r, r);	
+		glTexCoord2f(cz,cx);
+		glVertex3f(-1.0f,  r, r); 
+		glTexCoord2f(cz,cz);
+		glVertex3f(-1.0f,  r,-r);
+		glTexCoord2f(cx,cz);
+		glVertex3f(-1.0f, -r,-r);		
+	glEnd();
+ 
+	// Common Axis X - RT
+	glBindTexture(GL_TEXTURE_2D,SkyTex[2]);
+	glBegin(GL_QUADS);		
+		glTexCoord2f( cx,cx); 
+		glVertex3f(1.0f, -r, r);	
+		glTexCoord2f(cz, cx); 
+		glVertex3f(1.0f,  r, r); 
+		glTexCoord2f(cz, cz); 
+		glVertex3f(1.0f,  r,-r);
+		glTexCoord2f(cx, cz);
+		glVertex3f(1.0f, -r,-r);
+	glEnd();
+ 
+	// Common Axis Y - BK
+	glBindTexture(GL_TEXTURE_2D,SkyTex[1]);
+	glBegin(GL_QUADS);
+		glTexCoord2f(cz, cz); 
+		glVertex3f( r, -r,1.0f);
+		glTexCoord2f(cx, cz); 
+		glVertex3f( r,  r,1.0f); 
+		glTexCoord2f(cx, cx);
+		glVertex3f(-r,  r,1.0f);
+		glTexCoord2f(cz, cx);
+		glVertex3f(-r, -r,1.0f);
+	glEnd();
+ 
+	// Common Axis Y - FT
+
+
+	glBindTexture(GL_TEXTURE_2D,SkyTex[0]);
+	glBegin(GL_QUADS);		
+		glTexCoord2f(cz,cz);
+		glVertex3f( r, -r,-1.0f);
+		glTexCoord2f( cx,cz);
+		glVertex3f( r,  r,-1.0f); 
+		glTexCoord2f( cx,cx);
+		glVertex3f(-r,  r,-1.0f);
+		glTexCoord2f(cz, cx);
+		glVertex3f(-r, -r,-1.0f);
+	glEnd();
+
+
+ 
+	// Load Saved Matrix
+
+	//glBindTexture(GL_TEXTURE_CUBE_MAP_POSITIVE_X_EXT ,NULL);
+	glBindTexture(GL_TEXTURE_2D,NULL);
+	glPopMatrix();
+
+ 
+}*/
+
+void COpenGLControl::oglRenderSkybox(CVec3 position,CVec3 size)
+{	
+
+	// Begin DrawSkyTex
+	glColor4f(1.0, 1.0, 1.0,1.0f);
+ 
+	// Save Current Matrix
+	
+	glPushMatrix();
+
+	
+	// Second Move the render space to the correct position (Translate)
+	glTranslatef(position.x,position.y,position.z);
+ 
+
+	// First apply scale matrix
+	glScalef(size.x,size.y,size.z);
+ 
+	float cz = -0.0f,cx = 1.0f;
+	float r = 1.0f; // If you have border issues change this to 1.005f
+
+	//	Setup the Texture parameters
+	glBindTexture(GL_TEXTURE_CUBE_MAP ,SkyTex[0]);
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	//	Setup the Automatic Texture coordinate generation
+	float SplaneCoefficients[] = { 1, 0, 0, 0 };
+	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+	glTexGenfv(GL_S, GL_EYE_PLANE, SplaneCoefficients);
+	glTexGenfv(GL_S, GL_OBJECT_PLANE, SplaneCoefficients);
+
+	float TplaneCoefficients[] = { 0, 1, 0, 0 };
+	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+	glTexGenfv(GL_T, GL_EYE_PLANE, TplaneCoefficients);
+	glTexGenfv(GL_T, GL_OBJECT_PLANE, TplaneCoefficients);
+
+	float RplaneCoefficients[] = { 0, 0, 1, 0 };
+	glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_OBJECT_LINEAR);
+	glTexGenfv(GL_R, GL_EYE_PLANE, RplaneCoefficients);
+	glTexGenfv(GL_R, GL_OBJECT_PLANE, RplaneCoefficients);
+
+	//	Begin auto texture coordinate generation
+	glEnable(GL_TEXTURE_GEN_S);
+	glEnable(GL_TEXTURE_GEN_T);
+	glEnable(GL_TEXTURE_GEN_R);
+	
+	// Common Axis Z - UP Side
+	glBegin(GL_QUADS);	
+		glNormal3f(0,1.0f,0);
+		glVertex3f(-r ,1.0f,-r); 
+		glVertex3f(-r,1.0f,r);
+		glVertex3f( r,1.0f,r); 
+		glVertex3f( r ,1.0f,-r);
+	glEnd();
+ 
+	// Common Axis Z - DN side
+
+	glBegin(GL_QUADS);	
+		glNormal3f(0,-1.0f,0);
+		glVertex3f(-r,-1.0f,-r);
+		glVertex3f(-r,-1.0f, r);
+		glVertex3f( r,-1.0f, r); 
+		glVertex3f( r,-1.0f,-r);
+	glEnd();
+ 
+	// Common Axis X - LT
+
+	glBegin(GL_QUADS);		
+		glNormal3f(-1.0f,0,0);
+		glVertex3f(-1.0f, -r, r);	
+		glVertex3f(-1.0f,  r, r); 
+		glVertex3f(-1.0f,  r,-r);
+		glVertex3f(-1.0f, -r,-r);		
+	glEnd();
+ 
+	// Common Axis X - RT
+	glBegin(GL_QUADS);
+		glNormal3f(1.0f,0,0);
+		glVertex3f(1.0f, -r, r);	
+		glVertex3f(1.0f,  r, r); 
+		glVertex3f(1.0f,  r,-r);
+		glVertex3f(1.0f, -r,-r);
+	glEnd();
+ 
+	// Common Axis Y - BK
+	glBegin(GL_QUADS);
+		glNormal3f(0,0,1.0f);
+		glVertex3f( r, -r,1.0f);
+		glVertex3f( r,  r,1.0f); 
+		glVertex3f(-r,  r,1.0f);
+		glVertex3f(-r, -r,1.0f);
+	glEnd();
+ 
+	// Common Axis Y - FT
+	glBegin(GL_QUADS);
+	glNormal3f(0,0,-1.0f);
+		glVertex3f( r, -r,-1.0f);
+		glVertex3f( r,  r,-1.0f); 
+		glVertex3f(-r,  r,-1.0f);
+		glVertex3f(-r, -r,-1.0f);
+	glEnd();
+
+	//	Disable the auto texture coordinate generation
+	glDisable(GL_TEXTURE_GEN_S);		
+	glDisable(GL_TEXTURE_GEN_T);
+	glDisable(GL_TEXTURE_GEN_R);
+
+	//	Unbind the texture
+	glBindTexture(GL_TEXTURE_CUBE_MAP,NULL);
+
+ 
+	// Load Saved Matrix
+	glPopMatrix();
+
+ 
+}
+
+inline void ConvertToInterleave(unsigned char * Input, unsigned char *Output, int Width, int Height)
+{
+
+	for(int j=0; j<Height; j++)
+	{
+		for(int i=0; i<Width; i++)
+		{
+			Output[3*(j*Width + i) + 0] = Input[(0*Width*Height) + ((Width * j) +i)];
+			Output[3*(j*Width + i) + 1] = Input[(1*Width*Height) + ((Width * j) +i)];
+			Output[3*(j*Width + i) + 2] = Input[(2*Width*Height) + ((Width * j) +i)];
+		}
+	}
+
+}
+
+/*void COpenGLControl::oglLoadSkyBoxTextures()
+{
+	//First Load the 6 texture Images for the Skybox
+
+	glEnable(GL_TEXTURE_2D);
+	
+	glGenTextures(6, SkyTex);
+	CImg<unsigned char> SkyTexImg[6];
+
+	//Load the images
+	SkyTexImg[0].load_bmp("Textures\\SkyBox\\FT.bmp");
+	SkyTexImg[1].load_bmp("Textures\\SkyBox\\BK.bmp");
+	SkyTexImg[2].load_bmp("Textures\\SkyBox\\RT.bmp");
+
+	SkyTexImg[3].load_bmp("Textures\\SkyBox\\LT.bmp");
+	SkyTexImg[4].load_bmp("Textures\\SkyBox\\UP.bmp");
+	SkyTexImg[5].load_bmp("Textures\\SkyBox\\DN.bmp");
+
+	unsigned char * TexImage = new unsigned char[SkyTexImg[0].width()*SkyTexImg[0].height()*3];
+
+	for(int i=0; i<6; i++)
+	{
+		memset(TexImage,0,(SkyTexImg[i].width()*SkyTexImg[i].height()*3) );
+		ConvertToInterleave(SkyTexImg[i].data(),TexImage,SkyTexImg[i].width(), SkyTexImg[i].height());
+
+		glBindTexture(GL_TEXTURE_2D, SkyTex[i]);
+		glTexImage2D(GL_TEXTURE_2D, 0, 3, SkyTexImg[i].width(), SkyTexImg[i].height(), 0, GL_RGB, GL_UNSIGNED_BYTE, TexImage);
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	// Linear Filtering
+	}
+
+	delete [] TexImage;
+	
+
+	//printf("\n Loading Textures");
+
+	//SkyTex[0] = SOIL_load_OGL_single_cubemap ("SkyBox.png","EWUDNS",SOIL_LOAD_AUTO,SOIL_CREATE_NEW_ID,SOIL_FLAG_DDS_LOAD_DIRECT);
+
+	//printf("\n Loading Textures: %s, ",SOIL_last_result()); 
+
+								
+}*/
+
+void COpenGLControl::oglLoadSkyBoxTextures()
+{
+	glEnable(GL_TEXTURE_CUBE_MAP);
+
+	printf("\n Loading Textures");
+
+	SkyTex[0] = SOIL_load_OGL_single_cubemap ("Textures\\Skybox\\SkyBoxDark.png",SOIL_DDS_CUBEMAP_FACE_ORDER,SOIL_LOAD_AUTO,SOIL_CREATE_NEW_ID,SOIL_FLAG_MIPMAPS | SOIL_FLAG_DDS_LOAD_DIRECT);
+
+	glBindTexture(GL_TEXTURE_CUBE_MAP ,SkyTex[0]);
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	
+	glBindTexture(GL_TEXTURE_CUBE_MAP ,NULL);
+
+	printf("\n Loading Textures: %s, ",SOIL_last_result()); 
+
+								
 }

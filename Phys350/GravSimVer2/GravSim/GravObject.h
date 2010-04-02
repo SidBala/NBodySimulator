@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 class CVec3
 {
 public:
@@ -36,8 +38,13 @@ public:
 
 	CVec3 v3Vi, v3Vf;
 	CVec3 v3Pi, v3Pf;
+	
 	float fMass;
 	float fRadius;
+
+	std::vector<CVec3> Trails;
+
+	GLUquadric* Quadric;
 
 public:
 	CGravObject(void);

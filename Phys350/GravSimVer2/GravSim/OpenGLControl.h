@@ -1,10 +1,14 @@
 #pragma once
 #include "afxwin.h"
 
-#include <gl/gl.h>
+#include "Include/gl/glew.h"
 #include <gl/glu.h>
+
 #include "planetdefs.h"
 #include <vector>
+#include "CImg.h"
+
+using namespace cimg_library;
 
 class COpenGLControl : public CWnd
 {
@@ -36,6 +40,9 @@ class COpenGLControl : public CWnd
 		CRect m_oldWindow;
 		CRect m_originalRect;
 
+		//SkyBox Textures
+		GLuint SkyTex[6];
+
 	public:
 		COpenGLControl(void);
 		virtual ~COpenGLControl(void);
@@ -43,6 +50,8 @@ class COpenGLControl : public CWnd
 		void oglCreate(CRect rect, CWnd *parent);
 		void oglInitialize(void);
 		void oglDrawScene(std::vector<CGravObject*> *ObjList);
+		void oglLoadSkyBoxTextures();
+		void oglRenderSkybox(CVec3 position,CVec3 size);
 
 		// Added message classes:
 		afx_msg void OnPaint();
