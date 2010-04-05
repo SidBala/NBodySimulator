@@ -4,18 +4,24 @@
 
 #include "OpenGLControl.h"
 #include "ObjectSim.h"
+#include "SceneManager.h"
+#include "TextureLoader.h"
 
 
 // CGravSimDlg dialog
 class CGravSimDlg : public CDialog
 {
 private:
-	COpenGLControl m_oglWindow;
-	bool IsProcessing;
 	
-	CObjectSim	m_objSim;
+	bool IsProcessing;
 
-	std::vector <CGravObject*> m_objList;
+	COpenGLControl m_oglWindow;
+	CObjectSim	m_objSim;
+	CTextureLoader m_texLoader;
+
+	//std::vector <CGravObject*> m_objList;
+
+	CSceneManager m_SceneMgr;
 
 // Construction
 public:
@@ -47,4 +53,5 @@ public:
 protected:
 	virtual void OnCancel();
 	virtual void OnOK();
+public:
 };

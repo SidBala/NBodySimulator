@@ -3,6 +3,7 @@
 #include <vector>
 #include "GravObject.h"
 #include "PerfTool.h"
+#include "Scene.h"
 
 class CObjectSim
 {
@@ -11,7 +12,7 @@ public:
 
 public:
 	CObjectSim(void);
-	void SimUpdate(DWORD milliseconds, std::vector<CGravObject*> *ObjList);
+	void SimUpdate(CScene *Scene);
 
 	~CObjectSim(void);
 };

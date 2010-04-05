@@ -43,6 +43,8 @@ CPlanetSun::CPlanetSun(void)
 	fMass = 500;					//	Give object a mass
 	fRadius = 0.15;					//	Give object a radius
 
+	strName = "Sun";
+
 }
 CPlanetSun::~CPlanetSun(void)
 {
@@ -66,6 +68,8 @@ CPlanetNemesis::CPlanetNemesis(void)
 	
 	fMass = 500;					//	Give object a mass
 	fRadius = 0.1;					//	Give object a radius
+
+	strName = "Nememis";
 
 }
 //Suns Binary Star
@@ -94,6 +98,8 @@ CPlanetEarth::CPlanetEarth(void)
 	fMass = 10.0f;						//	Give object a mass
 	fRadius = 0.051f;					//	Give object a radius
 
+	strName = "Earth";
+
 }
 CPlanetEarth::~CPlanetEarth(void)
 {
@@ -116,6 +122,7 @@ CPlanetMoon::CPlanetMoon(void)
 	
 	fMass = 0.1f;						//	Give object a mass
 	fRadius = 0.01f;					//	Give object a radius
+	strName = "Moon";
 
 }
 CPlanetMoon::~CPlanetMoon(void)
@@ -139,7 +146,8 @@ CPlanetVenus::CPlanetVenus(void)
 	v3Vf = CVec3(0,0,4);			//	Give object an initial velocity
 	
 	fMass = 0.5f;					//	Give object a mass
-	fRadius = 0.05f;					//	Give object a radius
+	fRadius = 0.05f;				//	Give object a radius
+	strName = "Venus";
 
 }
 CPlanetVenus::~CPlanetVenus(void)

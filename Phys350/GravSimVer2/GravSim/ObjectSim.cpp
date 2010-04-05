@@ -5,7 +5,7 @@
 //class CVec3;
 
 static const float G = 0.1f;					//	Gravitational Constant
-static int TrailLength = 200;
+static int TrailLength = 500;
 
 CObjectSim::CObjectSim(void)
 {
@@ -16,10 +16,12 @@ CObjectSim::~CObjectSim(void)
 {
 }
 
-void CObjectSim::SimUpdate(DWORD milliseconds, std::vector<CGravObject*> *ObjList)
+void CObjectSim::SimUpdate(CScene *Scene)
 {
 	//PerfObjectSim.Start();					// Start the Performance Counter
 
+
+	std::vector<CGravObject*> *ObjList = &(Scene->NodeList);
 
 	std::vector<CGravObject*>::iterator	i;
 	std::vector<CGravObject*>::iterator	j;
@@ -36,6 +38,17 @@ void CObjectSim::SimUpdate(DWORD milliseconds, std::vector<CGravObject*> *ObjLis
 	{
 		(*i)->v3Pi = (*i)->v3Pf;
 		(*i)->v3Vi = (*i)->v3Vf;
+
+		//Rotate the planets around
+
+		(*i)->fRotPl = (*i)->fRotPl + (*i)->fRotvPl;
+		if((*i)->fRotPl > 360) (*i)->fRotPl = 0;
+
+		//Rotate the clouds around
+
+		(*i)->fRotCl = (*i)->fRotCl + (*i)->fRotvCl;
+		if((*i)->fRotCl > 360) (*i)->fRotCl = 0;
+
 
 		//Add Trails here
 
@@ -72,5 +85,7 @@ void CObjectSim::SimUpdate(DWORD milliseconds, std::vector<CGravObject*> *ObjLis
 		(*i)->v3Vf = (*i)->v3Vi + (v3Acc * dt);
 		(*i)->v3Pf = (*i)->v3Pi + ((*i)->v3Vf * dt);
 	}
-	//PerfObjectSim.Log();
+	
+	
+	Scene->UpdateNameLists();		//	This is required if there are completely inelastic collisions
 }

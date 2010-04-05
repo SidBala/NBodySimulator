@@ -83,9 +83,9 @@ EXSTYLE WS_EX_APPWINDOW
 CAPTION "GravSim"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,544,161,50,14,NOT WS_VISIBLE
-    PUSHBUTTON      "Cancel",IDCANCEL,544,325,50,14,NOT WS_VISIBLE
-    CONTROL         "",IDC_OPENGL,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,7,7,587,332
+    DEFPUSHBUTTON   "OK",IDOK,542,298,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Cancel",IDCANCEL,542,325,50,14,NOT WS_VISIBLE
+    CONTROL         "",IDC_OPENGL,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,137,7,455,332
 END
 
 
@@ -111,13 +111,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "TODO: <Company name>"
-            VALUE "FileDescription", "TODO: <File description>"
+            VALUE "CompanyName", "Pwnage"
+            VALUE "FileDescription", "Gravity Simulation Engine"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "GravSim.exe"
-            VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
+            VALUE "LegalCopyright", "Pwnage .  All rights reserved."
             VALUE "OriginalFilename", "GravSim.exe"
-            VALUE "ProductName", "TODO: <Product name>"
+            VALUE "ProductName", "Gravity Simulation Engine"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END
@@ -139,7 +139,7 @@ BEGIN
     IDD_GRAVSIM_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 594
+        RIGHTMARGIN, 592
         TOPMARGIN, 7
         BOTTOMMARGIN, 339
     END
