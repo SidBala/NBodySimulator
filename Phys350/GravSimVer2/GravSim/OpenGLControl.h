@@ -5,6 +5,8 @@
 #include <gl/glu.h>
 
 #include "planetdefs.h"
+#include "Scene.h"
+
 #include <vector>
 #include "CImg.h"
 
@@ -41,7 +43,7 @@ class COpenGLControl : public CWnd
 		CRect m_originalRect;
 
 		//SkyBox Textures
-		GLuint SkyTex[6];
+		GLuint SkyTex;
 
 	public:
 		COpenGLControl(void);
@@ -49,7 +51,7 @@ class COpenGLControl : public CWnd
 
 		void oglCreate(CRect rect, CWnd *parent);
 		void oglInitialize(void);
-		void oglDrawScene(std::vector<CGravObject*> *ObjList);
+		void oglDrawScene(CScene *Scene);
 		void oglLoadSkyBoxTextures();
 		void oglRenderSkybox(CVec3 position,CVec3 size);
 

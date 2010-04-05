@@ -13,6 +13,8 @@
 
 // CGravSimDlg dialog
 
+static int EdgeOffset = 0;
+extern CTextureLoader* TexLoad = 0;
 
 
 
@@ -50,27 +52,46 @@ BOOL CGravSimDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	CRect rect;
+	CRect oglrect;
 
-	// Get size and position of the template textfield we created before in the dialog editor
-	GetDlgItem(IDC_OPENGL)->GetWindowRect(rect);
+	
+	GetClientRect(rect);
+	//ScreenToClient(rect);
 
-	// Convert screen coordinates to client coordinates
-	ScreenToClient(rect);
+	GetDlgItem(IDC_OPENGL)->GetWindowRect(oglrect);
+
+	EdgeOffset = oglrect.left;
 
 	// Create OpenGL Control window
-	m_oglWindow.oglCreate(rect, this);
+	m_oglWindow.oglCreate(CRect(EdgeOffset,0,rect.right,rect.bottom), this);
+
+	m_texLoader.LoadTextures("Textures\\Planets");
+
+	TexLoad = &m_texLoader;
 
 	// Setup the OpenGL Window's timer to render
-	//	Setup the render timer
-	SetTimer(1,20,0);
-	IsProcessing = false;
+
+
+	
+	//	Setup Scenes here
+	
+	
+	m_SceneMgr.Init(&m_objSim,&m_oglWindow);
+
+	
 
 	//Do Allocation of Planets here
-	m_objList.push_back(new CPlanetEarth);
+/*	m_objList.push_back(new CPlanetEarth);
 	m_objList.push_back(new CPlanetSun);
 	m_objList.push_back(new CPlanetNemesis);
 	m_objList.push_back(new CPlanetMoon);
-	m_objList.push_back(new CPlanetVenus);
+	m_objList.push_back(new CPlanetVenus);*/
+
+	//	Setup the render timer
+	SetTimer(1,20,0);
+
+	LOG("\nStarting Simulation loop");
+	IsProcessing = false;
 	
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -115,23 +136,21 @@ void CGravSimDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
   
-	m_oglWindow.OnSize(nType, cx-20, cy-20);
+	m_oglWindow.MoveWindow(EdgeOffset,0,cx,cy,true);
+	m_oglWindow.OnSize(nType, cx-EdgeOffset, cy);
 }
 
 void CGravSimDlg::OnTimer(UINT_PTR nIDEvent)
 {
-	if(IsProcessing) return;
 
+	//	Main Loop
+
+	if(IsProcessing) return;
 	IsProcessing = true;
 
-	//Process Everything
 
-	m_objSim.SimUpdate (1, &m_objList);	//	Run the Physics Simulation here
-
-	m_oglWindow.oglDrawScene(&m_objList);			//	This is the Draw Function
-
-
-
+	//	Scene manager calls the processing and the draw 
+	m_SceneMgr.RunScene();
 
 	//Finished Processing Everything
 	IsProcessing = false;
@@ -150,10 +169,10 @@ void CGravSimDlg::Deinitialize()
 	KillTimer(1);				//	Kill the Process Loop
 	while(IsProcessing);		//	Wait for processing to finish
 
-								//Deallocation - Do it here!
+	
 
 	//Delete planets here
-	std::vector<CGravObject*>::iterator	i;
+/*	std::vector<CGravObject*>::iterator	i;
 	printf("\nDeleting Objects Now");
 	for(i = m_objList.begin(); i != m_objList.end() ; i++)				//	Delete all planet objects
 	{
@@ -162,6 +181,7 @@ void CGravSimDlg::Deinitialize()
 		*i = 0;
 	}
 	m_objList.empty();
+	*/
 }
 
 void CGravSimDlg::OnCancel()
@@ -175,3 +195,4 @@ void CGravSimDlg::OnOK()
 	Deinitialize();
 	CDialog::OnOK();
 }
+

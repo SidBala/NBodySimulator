@@ -1,6 +1,9 @@
 #pragma once
 
 #include <vector>
+#include <math.h>
+#include <stdlib.h>
+#include "TextureLoader.h"
 
 class CVec3
 {
@@ -41,13 +44,33 @@ public:
 	
 	float fMass;
 	float fRadius;
+	float fRotPl;
+	float fRotCl;
+	float fRotvPl;
+	float fRotvCl;
+
 
 	std::vector<CVec3> Trails;
+
+	std::string strName;
+
+	bool HasTexture;
+	bool HasCloud;
+
+	std::string Texture;
+	std::string Cloud;
 
 	GLUquadric* Quadric;
 
 public:
 	CGravObject(void);
+	CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius);											//	No Texture Constructor
+	CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,float fRot, std::string PlanetTexture);	//	Planet Texture
+	CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,float fRotp, float fRotc, std::string PlanetTexture, std::string CloudTexture);	//	Planet + Cloud Texture
+
 	virtual void DrawObject(void) ;
 	virtual ~CGravObject(void);
+
+	void renderSphere( float r, int p );
 };
+
