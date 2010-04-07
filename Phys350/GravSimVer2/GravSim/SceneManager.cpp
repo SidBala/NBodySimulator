@@ -2,13 +2,16 @@
 #include "SceneManager.h"
 
 
+//	Add all scenes here
 CSceneManager::CSceneManager(void)
 {
 	InitializeCriticalSection(&SceneManagerCS);
 	IsInit = false;
+	IsPaused = false;
 
-	SceneList.push_back(new DefaultScene);
-	SceneList.push_back(new WhateverScene);
+	AddScene(new DefaultScene);
+	AddScene(new WhateverScene);
+	AddScene(new BlackHole);
 	CurrentScene = SceneList[0];
 }
 
@@ -32,10 +35,18 @@ void CSceneManager::RunScene()
 
 	Lock();
 
+	if(!IsPaused)						//	Dont Move the objects if pause is on
 	mSim->SimUpdate(CurrentScene);
+
 	mRenderer->oglDrawScene(CurrentScene);
 
 
+	Unlock();
+}
+void CSceneManager::TogglePause()
+{
+	Lock();
+		IsPaused = !IsPaused;
 	Unlock();
 }
 
@@ -66,9 +77,38 @@ void CSceneManager::ChangeScene(int id)
 	Unlock();
 }
 
+void CSceneManager::ResetCurrentScene()
+{
+	Lock();
+	CurrentScene->Init();
+	Unlock();
+}
+
+void CSceneManager::AddScene(CScene *Scene)
+{
+	Lock();
+	Scene->Init();
+	SceneList.push_back(Scene);
+	UpdateNameList();
+	Unlock();
+}
+
+void CSceneManager::UpdateNameList()
+{
+	std::vector<CScene*>::iterator	i = SceneList.begin();
+	
+	SceneNames.clear();
+	
+	for(i = SceneList.begin(); i != SceneList.end();i++)
+	{
+		SceneNames.push_back((*i)->SceneName);
+	}
+}
+
 CSceneManager::~CSceneManager(void)
 {
 	Lock();
 	SceneList.clear();
+	SceneNames.clear();
 	Unlock();
 }

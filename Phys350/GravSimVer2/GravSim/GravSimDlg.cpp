@@ -5,6 +5,8 @@
 #include "GravSim.h"
 #include "GravSimDlg.h"
 #include "PlanetDefs.h"
+#include <string>
+#include <vector>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -27,6 +29,9 @@ CGravSimDlg::CGravSimDlg(CWnd* pParent /*=NULL*/)
 void CGravSimDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_PAUSEBUTTON, ButtonPause);
+	DDX_Control(pDX, IDC_SceneListCombo, m_SceneListCombo);
+	DDX_Control(pDX, IDC_PlanetListCombo, m_PlanetListCombo);
 }
 
 BEGIN_MESSAGE_MAP(CGravSimDlg, CDialog)
@@ -37,6 +42,10 @@ BEGIN_MESSAGE_MAP(CGravSimDlg, CDialog)
 	ON_WM_SIZE()
 	ON_WM_TIMER()
 	ON_WM_CLOSE()
+	ON_BN_CLICKED(IDC_PAUSEBUTTON, &CGravSimDlg::OnBnClickedPausebutton)
+	ON_CBN_SELCHANGE(IDC_SceneListCombo, &CGravSimDlg::OnCbnSelchangeScenelistcombo)
+	ON_BN_CLICKED(IDC_SCENERESETBUTTON, &CGravSimDlg::OnBnClickedSceneresetbutton)
+	ON_BN_CLICKED(IDC_RemovePlanetButton, &CGravSimDlg::OnBnClickedRemoveplanetbutton)
 END_MESSAGE_MAP()
 
 
@@ -52,18 +61,18 @@ BOOL CGravSimDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	CRect rect;
-	CRect oglrect;
+	//CRect oglrect;
 
 	
 	GetClientRect(rect);
 	//ScreenToClient(rect);
 
-	GetDlgItem(IDC_OPENGL)->GetWindowRect(oglrect);
+	//GetDlgItem(IDC_OPENGL)->GetWindowRect(oglrect);
 
-	EdgeOffset = oglrect.left;
+	//EdgeOffset = oglrect.left;
 
 	// Create OpenGL Control window
-	m_oglWindow.oglCreate(CRect(EdgeOffset,0,rect.right,rect.bottom), this);
+	m_oglWindow.oglCreate(CRect(0,0,rect.right,rect.bottom), this);
 
 	m_texLoader.LoadTextures("Textures\\Planets");
 
@@ -77,6 +86,13 @@ BOOL CGravSimDlg::OnInitDialog()
 	
 	
 	m_SceneMgr.Init(&m_objSim,&m_oglWindow);
+
+
+
+	//	Now Update the UI Elements
+	UpdateSceneList();
+	m_SceneListCombo.SetCurSel(0);
+	UpdatePlanetList();
 
 	
 
@@ -136,8 +152,8 @@ void CGravSimDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
   
-	m_oglWindow.MoveWindow(EdgeOffset,0,cx,cy,true);
-	m_oglWindow.OnSize(nType, cx-EdgeOffset, cy);
+	m_oglWindow.MoveWindow(0,0,cx,cy,true);
+	m_oglWindow.OnSize(nType, cx, cy);
 }
 
 void CGravSimDlg::OnTimer(UINT_PTR nIDEvent)
@@ -196,3 +212,59 @@ void CGravSimDlg::OnOK()
 	CDialog::OnOK();
 }
 
+
+void CGravSimDlg::UpdateSceneList()
+{
+	//Add all the Scene names into the drop down list
+
+	std::vector<std::string>::iterator i;
+
+	
+	for(i = m_SceneMgr.SceneNames.begin(); i != m_SceneMgr.SceneNames.end(); i++)
+	{
+		m_SceneListCombo.InsertString(-1,i->c_str());		
+	}
+}
+
+void CGravSimDlg::UpdatePlanetList()
+{
+	m_PlanetListCombo.ResetContent();
+
+	
+	std::vector<std::string>::iterator i;
+	
+	
+	for(i = m_SceneMgr.CurrentScene->NodeNames.begin(); i != m_SceneMgr.CurrentScene->NodeNames.end(); i++)
+	{
+		m_PlanetListCombo.InsertString(-1,i->c_str());		
+	}
+	
+	m_PlanetListCombo.SetCurSel(0);
+
+}
+
+
+void CGravSimDlg::OnBnClickedPausebutton()
+{
+	m_SceneMgr.TogglePause();
+}
+
+
+
+void CGravSimDlg::OnCbnSelchangeScenelistcombo()
+{
+	m_SceneMgr.ChangeScene(m_SceneListCombo.GetCurSel());
+	UpdatePlanetList();
+}
+
+void CGravSimDlg::OnBnClickedSceneresetbutton()
+{
+	m_SceneMgr.ResetCurrentScene();
+	UpdatePlanetList();
+}
+
+void CGravSimDlg::OnBnClickedRemoveplanetbutton()
+{
+	m_SceneMgr.DeleteNode(m_PlanetListCombo.GetCurSel());
+	UpdatePlanetList();
+}
