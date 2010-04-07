@@ -9,7 +9,7 @@ CSceneManager::CSceneManager(void)
 	IsInit = false;
 	IsPaused = false;
 
-	AddScene(new DefaultScene);
+	AddScene(new SolarSystem);
 	AddScene(new WhateverScene);
 	AddScene(new BlackHole);
 	CurrentScene = SceneList[0];
