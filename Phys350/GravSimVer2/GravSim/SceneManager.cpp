@@ -105,6 +105,21 @@ void CSceneManager::UpdateNameList()
 	}
 }
 
+void CSceneManager::HalveSpeed()
+{
+	Lock();
+	CurrentScene->fSpeed = CurrentScene->fSpeed /2;
+	Unlock();
+}
+void CSceneManager::DoubleSpeed()
+{
+	Lock();
+	
+	CurrentScene->fSpeed = CurrentScene->fSpeed *2;
+
+	Unlock();
+}
+
 CSceneManager::~CSceneManager(void)
 {
 	Lock();

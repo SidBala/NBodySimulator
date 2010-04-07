@@ -46,6 +46,8 @@ BEGIN_MESSAGE_MAP(CGravSimDlg, CDialog)
 	ON_CBN_SELCHANGE(IDC_SceneListCombo, &CGravSimDlg::OnCbnSelchangeScenelistcombo)
 	ON_BN_CLICKED(IDC_SCENERESETBUTTON, &CGravSimDlg::OnBnClickedSceneresetbutton)
 	ON_BN_CLICKED(IDC_RemovePlanetButton, &CGravSimDlg::OnBnClickedRemoveplanetbutton)
+	ON_BN_CLICKED(IDC_SPEEDDECREASEBUTTON, &CGravSimDlg::OnBnClickedSpeeddecreasebutton)
+	ON_BN_CLICKED(IDC_SPEEDINCREASEBUTTON, &CGravSimDlg::OnBnClickedSpeedincreasebutton)
 END_MESSAGE_MAP()
 
 
@@ -249,6 +251,16 @@ void CGravSimDlg::OnBnClickedPausebutton()
 	m_SceneMgr.TogglePause();
 }
 
+void CGravSimDlg::OnBnClickedSpeeddecreasebutton()
+{
+	m_SceneMgr.HalveSpeed();
+}
+
+void CGravSimDlg::OnBnClickedSpeedincreasebutton()
+{
+	m_SceneMgr.DoubleSpeed();
+}
+
 
 
 void CGravSimDlg::OnCbnSelchangeScenelistcombo()
@@ -268,3 +280,4 @@ void CGravSimDlg::OnBnClickedRemoveplanetbutton()
 	m_SceneMgr.DeleteNode(m_PlanetListCombo.GetCurSel());
 	UpdatePlanetList();
 }
+
