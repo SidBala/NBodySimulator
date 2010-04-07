@@ -49,6 +49,8 @@ public:
 	float fRotvPl;
 	float fRotvCl;
 
+	int iTrailLength;
+
 
 	std::vector<CVec3> Trails;
 
@@ -60,13 +62,11 @@ public:
 	std::string Texture;
 	std::string Cloud;
 
-	GLUquadric* Quadric;
-
 public:
 	CGravObject(void);
-	CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius);											//	No Texture Constructor
-	CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,float fRot, std::string PlanetTexture);	//	Planet Texture
-	CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,float fRotp, float fRotc, std::string PlanetTexture, std::string CloudTexture);	//	Planet + Cloud Texture
+	CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius, int TrailLength);											//	No Texture Constructor
+	CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,float fRot, std::string PlanetTexture, int TrailLength);	//	Planet Texture
+	CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,float fRotp, float fRotc, std::string PlanetTexture, std::string CloudTexture, int TrailLength);	//	Planet + Cloud Texture
 
 	virtual void DrawObject(void) ;
 	virtual ~CGravObject(void);

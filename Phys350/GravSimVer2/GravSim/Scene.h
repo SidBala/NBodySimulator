@@ -21,12 +21,16 @@ public:
 	std::vector<std::string> NodeNames;
 	std::string SceneName;
 
+	float fSpeed;
+
 public:
 	CScene(void);
 	
 	void DeleteNode(int NodeID);
 	void AddNode(CGravObject *NewNode);
 	void UpdateNameLists();
+	
+	virtual void Init() = 0;		//	This will be where the planets will go
 
 	inline bool IsEmpty()
 	{

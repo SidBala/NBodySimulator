@@ -101,11 +101,10 @@ CVec3 operator/(const CVec3 &v, const float f)
 
 CGravObject::CGravObject(void)
 {
-	Quadric = gluNewQuadric();
+
 }
 
-CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius)
-
+CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,int TrailLength)
 {
 	strName = Name;
 	v3Pf = Pi;
@@ -114,6 +113,8 @@ CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, floa
 	fRadius = Radius;
 	fRotvPl = 0;
 	fRotvCl = 0;
+	iTrailLength = TrailLength;
+
 
 	fRotPl = 0;
 	fRotCl = 0;
@@ -122,7 +123,7 @@ CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, floa
 }
 
 
-CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,float fRot, std::string PlanetTexture)	//	Planet Texture
+CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,float fRot, std::string PlanetTexture,int TrailLength)	//	Planet Texture
 {
 	strName = Name;
 	v3Pf = Pi;
@@ -131,6 +132,8 @@ CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, floa
 	fRadius = Radius;
 	fRotvPl = fRot;
 	fRotvCl = 0;
+	
+	iTrailLength = TrailLength;
 
 	fRotPl = 0;
 	fRotCl = 0;
@@ -138,7 +141,7 @@ CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, floa
 	HasTexture = true;
 	HasCloud = false;
 }
-CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,float fRotp, float fRotc, std::string PlanetTexture, std::string CloudTexture)	//	Planet + Cloud Texture
+CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, float Radius,float fRotp, float fRotc, std::string PlanetTexture, std::string CloudTexture,int TrailLength)	//	Planet + Cloud Texture
 {
 	strName = Name;
 	v3Pf = Pi;
@@ -147,6 +150,8 @@ CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, floa
 	fRadius = Radius;
 	fRotvPl = fRotp;
 	fRotvCl = fRotc;
+
+	iTrailLength = TrailLength;
 
 	fRotPl = 0;
 	fRotCl = 0;
@@ -158,7 +163,7 @@ CGravObject::CGravObject(std::string Name , CVec3 Pi, CVec3 Vi, float Mass, floa
 
 CGravObject::~CGravObject(void)
 {
-	gluDeleteQuadric(Quadric);
+
 }
 
 void CGravObject::DrawObject(void)

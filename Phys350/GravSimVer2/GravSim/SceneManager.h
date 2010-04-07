@@ -28,10 +28,15 @@ public:
 	void Init(CObjectSim* ObjSim, COpenGLControl* OglControl);
 	void DeleteNode(int id);
 	void AddNode(CGravObject* Node);
+	void AddScene(CScene* Scene);
+	void UpdateNameList();
 	void ChangeScene(int id);
+	void ResetCurrentScene();
 	void RunScene();
+	void TogglePause();
 
 	bool IsInit;
+	bool IsPaused;
 
 	inline void Lock()
 	{

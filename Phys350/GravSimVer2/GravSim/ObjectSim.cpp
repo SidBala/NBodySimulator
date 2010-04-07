@@ -32,7 +32,7 @@ void CObjectSim::SimUpdate(CScene *Scene)
 	float	fDist				= 0.0f;
 	float	fCube				= 0.0f;
 	float	fForceMag			= 0.0f; 
-	float	dt					= 0.01f;		//(float)milliseconds / 1000;
+	float	dt					= Scene->fSpeed;		
 
 	for(i = ObjList->begin(); i != ObjList->end() ; i++)				//	Set all initial positions to the last final positions
 	{
@@ -52,7 +52,7 @@ void CObjectSim::SimUpdate(CScene *Scene)
 
 		//Add Trails here
 
-		if((*i)->Trails.size() == TrailLength)
+		if((*i)->Trails.size() == (*i)->iTrailLength)
 		{
 			(*i)->Trails.erase((*i)->Trails.begin());
 		}
