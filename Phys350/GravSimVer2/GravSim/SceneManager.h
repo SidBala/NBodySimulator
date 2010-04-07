@@ -32,6 +32,8 @@ public:
 	void UpdateNameList();
 	void ChangeScene(int id);
 	void ResetCurrentScene();
+	void HalveSpeed();
+	void DoubleSpeed();
 	void RunScene();
 	void TogglePause();
 

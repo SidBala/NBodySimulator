@@ -64,4 +64,6 @@ public:
 	afx_msg void OnBnClickedSceneresetbutton();
 	CComboBox m_PlanetListCombo;
 	afx_msg void OnBnClickedRemoveplanetbutton();
+	afx_msg void OnBnClickedSpeeddecreasebutton();
+	afx_msg void OnBnClickedSpeedincreasebutton();
 };

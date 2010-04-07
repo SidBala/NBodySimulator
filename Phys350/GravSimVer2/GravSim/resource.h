@@ -10,6 +10,8 @@
 #define IDC_SCENERESETBUTTON            1006
 #define IDC_PlanetListCombo             1007
 #define IDC_RemovePlanetButton          1008
+#define IDC_SPEEDDECREASEBUTTON         1009
+#define IDC_SPEEDINCREASEBUTTON         1010
 
 // Next default values for new objects
 // 
