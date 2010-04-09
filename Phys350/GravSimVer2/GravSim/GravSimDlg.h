@@ -66,4 +66,15 @@ public:
 	afx_msg void OnBnClickedRemoveplanetbutton();
 	afx_msg void OnBnClickedSpeeddecreasebutton();
 	afx_msg void OnBnClickedSpeedincreasebutton();
+	afx_msg void OnBnClickedFocusbutton();
+	float EditPosX;
+	float EditPosY;
+	float EditPosZ;
+	float EditVelX;
+	float EditVelY;
+	float EditVelZ;
+	float EditMass;
+	float EditRadius;
+	afx_msg void OnBnClickedAddplanetbutton();
+	afx_msg void OnBnClickedUnfocusbutton();
 };

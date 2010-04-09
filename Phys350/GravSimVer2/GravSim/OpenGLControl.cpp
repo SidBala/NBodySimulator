@@ -133,6 +133,11 @@ void COpenGLControl::OnMouseMove(UINT nFlags, CPoint point)
 		m_fZoom -= (float)0.1f * diffY;
 	}
 
+	//	Limit Zoom to Positive
+
+	if(m_fZoom < 0.5)
+		m_fZoom = 0.5;
+
 	// Middle mouse button
 	else if (nFlags & MK_MBUTTON)
 	{
@@ -220,7 +225,16 @@ void COpenGLControl::oglDrawScene(CScene *Scene)
 		glRotatef(m_fRotX, 1.0f, 0.0f, 0.0f);		//	Camera Controls - Rotation X
 		glRotatef(m_fRotY, 0.0f, 1.0f, 0.0f);		//	Camera Controls - Rotation Y
 		
+
+		//	Center Camera on objects here
 		
+		if(Scene->iCameraFocus != -1)
+		{
+			CVec3 Cam =Scene->NodeList[Scene->iCameraFocus]->v3Pf;
+			glTranslatef(-Cam.x,-Cam.y,-Cam.z);			
+		}
+
+
 		//	Render skybox
 		oglRenderSkybox(CVec3(0,0,0),CVec3(1000,1000,1000));
 
@@ -238,16 +252,15 @@ void COpenGLControl::oglDrawScene(CScene *Scene)
 		glEnd();*/
 
 		
+
+	//	For every object in the scene, render its draw function
 	std::vector<CGravObject*> *ObjList = &(Scene->NodeList);
 
 	std::vector<CGravObject*>::iterator	i;
 
 	for(i = ObjList->begin(); i != ObjList->end() ; i++)
 	{
-
-		//glPushMatrix();
 		(*i)->DrawObject();
-		//glPopMatrix();
 	}
 
 	

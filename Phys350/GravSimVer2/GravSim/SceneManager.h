@@ -34,6 +34,7 @@ public:
 	void ResetCurrentScene();
 	void HalveSpeed();
 	void DoubleSpeed();
+	void SetCameraFocus(int id);
 	void RunScene();
 	void TogglePause();
 

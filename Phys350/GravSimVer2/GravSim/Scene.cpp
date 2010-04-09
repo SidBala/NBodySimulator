@@ -3,6 +3,7 @@
 
 CScene::CScene(void)
 {
+	iCameraFocus = -1;
 }
 
 void CScene::DeleteNode(int NodeID)

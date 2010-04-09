@@ -33,6 +33,8 @@ public:
 		AddNode(new CGravObject("Mars",CVec3(0,6,0),CVec3(-9,0,0),2,0.00073*100,2,-4,"nr2-bump","SamothraceClouds",380));
 		AddNode(new CGravObject("Jupiter",CVec3(11,0,0),CVec3(0,7,0),30,0.015*10,2,-4,"nr2-bump","SamothraceClouds",1125));
 		AddNode(new CGravObject("Saturn",CVec3(-15,0,0),CVec3(0,-6,0),12,0.0013*10,2,-4,"nr2-bump","SamothraceClouds",1250));
+		AddNode(new CGravObject("HyperComet",CVec3(15,0,15),CVec3(-12,0,-10),1,0.013*10,2,-4,"nr2-bump","SamothraceClouds",1250));
+		AddNode(new CGravObject("HyperComet",CVec3(0,20,-10),CVec3(0,-8,+3),1,0.013*10,2,-4,"nr2-bump","SamothraceClouds",1250));
 	/*	AddNode(new CGravObject("Uranus",CVec3(0,19.7,0),CVec3(27.2,0,0),21.82,0.0055*100,100));
 		AddNode(new CGravObject("Neptune",CVec3(0,30.56,0),CVec3(-28,0,0),25.75,0.0053*100,100));
 		AddNode(new CGravObject("Pluto",CVec3(0,40,0),CVec3(611,0,0),0.003,0.00024*100,100));	
@@ -54,11 +56,33 @@ public:
 		
 		SceneName = "Whatever Scene";						//	Specify the scenename
 
-		fSpeed = 0.001;
+		fSpeed = 0.01;
 		
-		AddNode(new CGravObject("Blearth",CVec3(0,0,0),CVec3(0,0,0),1500,0.5,2,-1,"tim102","earthclouds",20));
-		AddNode(new CGravObject("Noom",CVec3(0,1.5,0),CVec3(0,0,6),100,0.2,2,-4,"nr2-bump","SamothraceClouds",40));
-		AddNode(new CGravObject("RockMoon",CVec3(0,-1.5,0),CVec3(0,0,-6),100,0.1,2,"nr2",100));
+		AddNode(new CGravObject("Sun",CVec3(0,0,0),CVec3(0,0,0),5000,0.3,2,-4,"th_sun","th_suncover",100));
+
+		float gm = 5000*0.1;
+		float trail = 6;
+
+		for(int r =1; r <10; r+=2)
+		{
+			float v = sqrt(gm/r);
+			AddNode(new CGravObject("HyperComet",CVec3(r,0,0),CVec3(0,v,0),1,0.013*10,2,-4,"nr2-bump","th_suncover",trail*r));
+			AddNode(new CGravObject("HyperComet",CVec3(-r,0,0),CVec3(0,-v,0),1,0.013*10,2,-4,"nr2-bump","th_suncover",trail*r));
+		}
+
+		for(int r =1; r <10; r+=2)
+		{
+			float v = sqrt(gm/r);
+			AddNode(new CGravObject("HyperComet",CVec3(0,r,0),CVec3(-v,0,0),1,0.013*10,2,-4,"nr2-bump","th_suncover",trail*r));
+			AddNode(new CGravObject("HyperComet",CVec3(0,-r,0),CVec3(v,0,0),1,0.013*10,2,-4,"nr2-bump","th_suncover",trail*r));
+		}
+
+		
+
+		// Ima Build a loooping dyson swarm here
+		//AddNode(new CGravObject("Blearth",CVec3(0,0,0),CVec3(0,0,0),1500,0.5,2,-1,"tim102","earthclouds",20));
+		//AddNode(new CGravObject("Noom",CVec3(0,1.5,0),CVec3(0,0,6),100,0.2,2,-4,"nr2-bump","SamothraceClouds",40));
+		//AddNode(new CGravObject("RockMoon",CVec3(0,-1.5,0),CVec3(0,0,-6),100,0.1,2,"nr2",100));
 												
 												//	Build the scene component wise
 	}

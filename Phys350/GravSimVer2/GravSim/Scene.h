@@ -23,6 +23,8 @@ public:
 
 	float fSpeed;
 
+	int iCameraFocus;
+
 public:
 	CScene(void);
 	
