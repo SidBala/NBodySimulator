@@ -56,8 +56,12 @@ void CSceneManager::DeleteNode(int id)
 	if(!CurrentScene->IsEmpty())
 	{
 		LOG("\nDeleting Object %s from %s",CurrentScene->NodeNames[id].data(),CurrentScene->SceneName.data());
-		CurrentScene->DeleteNode(id);
+		
+		//	If Current object is the focused object, remove the focus
+		if(CurrentScene->iCameraFocus == id)
+			CurrentScene->iCameraFocus = -1;
 
+		CurrentScene->DeleteNode(id);
 	}
 	Unlock();
 }
@@ -74,6 +78,20 @@ void CSceneManager::ChangeScene(int id)
 	std::vector<CScene*>::iterator	i = SceneList.begin() + id;
 	LOG("\nChanging Scene from %s to %s",CurrentScene->SceneName.data(),(*i)->SceneName.data());
 	CurrentScene = (*i);
+	Unlock();
+}
+
+void CSceneManager::SetCameraFocus(int id)
+{
+	Lock();
+		
+	if(id != -1)
+		LOG("\nFocusing Camera on %s",CurrentScene->NodeNames[id].data());
+	else
+		LOG("\nResetting Camera focus");
+		
+	CurrentScene->iCameraFocus = id;
+
 	Unlock();
 }
 

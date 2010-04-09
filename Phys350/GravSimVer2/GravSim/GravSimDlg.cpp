@@ -22,6 +22,14 @@ extern CTextureLoader* TexLoad = 0;
 
 CGravSimDlg::CGravSimDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CGravSimDlg::IDD, pParent)
+	, EditPosX(0)
+	, EditPosY(0)
+	, EditPosZ(0)
+	, EditVelX(0)
+	, EditVelY(0)
+	, EditVelZ(0)
+	, EditMass(0)
+	, EditRadius(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -48,6 +56,9 @@ BEGIN_MESSAGE_MAP(CGravSimDlg, CDialog)
 	ON_BN_CLICKED(IDC_RemovePlanetButton, &CGravSimDlg::OnBnClickedRemoveplanetbutton)
 	ON_BN_CLICKED(IDC_SPEEDDECREASEBUTTON, &CGravSimDlg::OnBnClickedSpeeddecreasebutton)
 	ON_BN_CLICKED(IDC_SPEEDINCREASEBUTTON, &CGravSimDlg::OnBnClickedSpeedincreasebutton)
+	ON_BN_CLICKED(IDC_FocusButton, &CGravSimDlg::OnBnClickedFocusbutton)
+	ON_BN_CLICKED(IDC_AddPlanetButton, &CGravSimDlg::OnBnClickedAddplanetbutton)
+	ON_BN_CLICKED(IDC_UnFocusButton, &CGravSimDlg::OnBnClickedUnfocusbutton)
 END_MESSAGE_MAP()
 
 
@@ -281,3 +292,36 @@ void CGravSimDlg::OnBnClickedRemoveplanetbutton()
 	UpdatePlanetList();
 }
 
+
+void CGravSimDlg::OnBnClickedFocusbutton()
+{
+	m_SceneMgr.SetCameraFocus(m_PlanetListCombo.GetCurSel());
+}
+
+void CGravSimDlg::OnBnClickedAddplanetbutton()
+{
+	//CVec3 Pos = m_SceneMgr.CurrentScene->NodeList[m_PlanetListCombo.GetCurSel()]->v3Pf; 
+	//CVec3 Vel = m_SceneMgr.CurrentScene->NodeList[m_PlanetListCombo.GetCurSel()]->v3Pi;
+	UpdateData();
+	
+	//CVec3 Pos(EditPosX,EditPosY,EditPosZ);
+	//CVec3 Vel(EditVelX,EditVelY,EditVelZ);
+	//float Mass = EditMass;
+	//float Radius = EditRadius;
+	float Trails = 100;
+
+	CVec3 Pos(10,10,10);
+	CVec3 Vel(-3,-3,-3);
+	float Mass = 10000;
+	float Radius = 10;
+
+	m_SceneMgr.AddNode(new CGravObject("AddedObject",Pos,Vel,Mass,Radius,Trails));
+	UpdatePlanetList();
+
+
+}
+
+void CGravSimDlg::OnBnClickedUnfocusbutton()
+{
+	m_SceneMgr.SetCameraFocus(-1);
+}
