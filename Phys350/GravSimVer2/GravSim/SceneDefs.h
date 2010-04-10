@@ -19,26 +19,33 @@ public:
 												
 		NodeList.clear();
 
-		fSpeed = 0.01;
+		fSpeed = 0.002;
 												//	Build the scene component wise
 
 /*		AddNode(new CGravObject("Earth",CVec3(0,0,0),CVec3(0,0,0),500,0.5,1,-2,"tim102","MarsClouds",100));
 		AddNode(new CGravObject("Moon",CVec3(0,0,3),CVec3(4,0,0),100,0.2,2,-4,"nr2-bump","SamothraceClouds",100));
 		AddNode(new CGravObject("Moon2",CVec3(0,0,-3),CVec3(-4,0,0),100,0.1,2,"nr2",100));
 */
-		AddNode(new CGravObject("Sun",CVec3(0,0,0),CVec3(0,0,0),5000,0.75,2,-4,"th_sun","th_suncover",100));
-		AddNode(new CGravObject("Mercury",CVec3(2,0,0),CVec3(0,15,0),1,0.00026*100,2,-4,"nr2-bump","SamothraceClouds",68));
-		AddNode(new CGravObject("Venus",CVec3(-3,0,0),CVec3(0,-13.5,0),4,0.00065*100,2,-4,"nr2-bump","SamothraceClouds",165));
-		AddNode(new CGravObject("Earth",CVec3(0,-4.5,0),CVec3(11,0,0),5,0.00137*100,2,-4,"nr2-bump","SamothraceClouds",300));
-		AddNode(new CGravObject("Mars",CVec3(0,6,0),CVec3(-9,0,0),2,0.00073*100,2,-4,"nr2-bump","SamothraceClouds",380));
-		AddNode(new CGravObject("Jupiter",CVec3(11,0,0),CVec3(0,7,0),30,0.015*10,2,-4,"nr2-bump","SamothraceClouds",1125));
-		AddNode(new CGravObject("Saturn",CVec3(-15,0,0),CVec3(0,-6,0),12,0.0013*10,2,-4,"nr2-bump","SamothraceClouds",1250));
-		AddNode(new CGravObject("HyperComet",CVec3(15,0,15),CVec3(-12,0,-10),1,0.013*10,2,-4,"nr2-bump","SamothraceClouds",1250));
-		AddNode(new CGravObject("HyperComet",CVec3(0,20,-10),CVec3(0,-8,+3),1,0.013*10,2,-4,"nr2-bump","SamothraceClouds",1250));
-	/*	AddNode(new CGravObject("Uranus",CVec3(0,19.7,0),CVec3(27.2,0,0),21.82,0.0055*100,100));
-		AddNode(new CGravObject("Neptune",CVec3(0,30.56,0),CVec3(-28,0,0),25.75,0.0053*100,100));
-		AddNode(new CGravObject("Pluto",CVec3(0,40,0),CVec3(611,0,0),0.003,0.00024*100,100));	
-	*/
+		AddNode(new CGravObject("Sun",CVec3(0,0,0),CVec3(0,0,0),50000,0.75,2,-4,"th_sun","th_suncover",100));
+		
+		
+		AddNode(new CGravObject("Mercury",CVec3(-1.88,0,0),CVec3(0,-43.58,0),0.08,0.0402,2,"mercurymap",50));
+	    AddNode(new CGravObject("Venus",CVec3(-2.72,0,0),CVec3(0,-36.23,0),1.22,0.052,2,"venusmap",115));
+		AddNode(new CGravObject("Earth",CVec3(-3.5,0,0),CVec3(0,-31.94,0),1.22,0.1096,2,-4,"earthmap1k","earthcloudmap",175));
+    	AddNode(new CGravObject("Mars",CVec3(-4.52,0,0),CVec3(0,-28.10,0),0.16,0.0584,2,"marsmap1k",250));
+		AddNode(new CGravObject("Jupiter",CVec3(7.2,0,0),CVec3(0,29.88,0),250,0.45,2,"jupitermap",1250));
+		AddNode(new CGravObject("Saturn",CVec3(12.54,0,0),CVec3(0,22.64,0),142,0.37,2,"saturnmap",1250));
+	//	AddNode(new CGravObject("HyperComet",CVec3(15,0,15),CVec3(-12,0,-10),1,0.013*10,2,-4,"nr2-bump","SamothraceClouds",1250));
+	//	AddNode(new CGravObject("HyperComet",CVec3(0,20,-10),CVec3(0,-8,+3),1,0.013*10,2,-4,"nr2-bump","SamothraceClouds",1250));
+		AddNode(new CGravObject("Uranus",CVec3(-20.21,0,0),CVec3(0,-13.29,0),21.82,0.22,2,"uranusmap",1500));
+		AddNode(new CGravObject("Neptune",CVec3(26.06,0,0),CVec3(0,15.70,0),25.75,0.212,2,"neptunemap",1500));
+		AddNode(new CGravObject("Pluto",CVec3(-29.5,0,0),CVec3(0,-11.00,0),0.003,0.0192,2,"plutomap1k",1600));	
+		
+		
+		
+		
+	//	AddNode(new CGravObject("Moon",CVec3(-3.7,0,0),CVec3(0,-32.72485325,0),0.1,0.025,2,-4,"nr2-bump","SamothraceClouds",100));
+		
 
 
 
@@ -83,7 +90,6 @@ public:
 												//	Build the scene component wise
 	}
 };
-
 class BlackHole: public CScene
 {
 public:
