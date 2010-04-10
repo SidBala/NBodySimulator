@@ -32,7 +32,8 @@ void CObjectSim::SimUpdate(CScene *Scene)
 	float	fDist				= 0.0f;
 	float	fCube				= 0.0f;
 	float	fForceMag			= 0.0f; 
-	float	dt					= Scene->fSpeed;		
+	float	dt					= Scene->fSpeed;
+	int		ignore				= Scene->iIgnore;
 
 	for(i = ObjList->begin(); i != ObjList->end() ; i++)				//	Set all initial positions to the last final positions
 	{
@@ -59,11 +60,11 @@ void CObjectSim::SimUpdate(CScene *Scene)
 		(*i)->Trails.insert((*i)->Trails.end(),(*i)->v3Pf);
 	}
 
-	for(i = ObjList->begin(); i != ObjList->end() ; i++)
+	for(i = ObjList->begin(); i != ObjList->end(); i++)
 	{
 		v3Acc = CVec3(0.0f,0.0f,0.0f);
 
-		for(j = ObjList->begin(); j != ObjList->end() ; j++)
+		for(j = ObjList->begin(); j != ((ignore !=-1 )?(ObjList->begin() + ignore) : (ObjList->end())) ; j++)
 		{
 			if(i!=j)
 			{
@@ -86,6 +87,7 @@ void CObjectSim::SimUpdate(CScene *Scene)
 		(*i)->v3Pf = (*i)->v3Pi + ((*i)->v3Vf * dt);
 	}
 	
+	//PerfObjectSim.Log();			//	Performance Counter
 	
 	Scene->UpdateNameLists();		//	This is required if there are completely inelastic collisions
 }

@@ -22,6 +22,7 @@ public:
 	std::string SceneName;
 
 	float fSpeed;
+	int iIgnore;
 
 	int iCameraFocus;
 
@@ -30,7 +31,9 @@ public:
 	
 	void DeleteNode(int NodeID);
 	void AddNode(CGravObject *NewNode);
+	void IgnoreMode();
 	void UpdateNameLists();
+
 	
 	virtual void Init() = 0;		//	This will be where the planets will go
 
