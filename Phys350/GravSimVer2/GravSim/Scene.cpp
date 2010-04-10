@@ -4,6 +4,7 @@
 CScene::CScene(void)
 {
 	iCameraFocus = -1;
+	iIgnore = -1;
 }
 
 void CScene::DeleteNode(int NodeID)
@@ -18,6 +19,11 @@ void CScene::AddNode(CGravObject *NewNode)
 	NodeList.push_back(NewNode);
 	
 	UpdateNameLists();
+}
+
+void CScene::IgnoreMode()
+{
+	iIgnore = NodeList.size();
 }
 
 void CScene::UpdateNameLists()

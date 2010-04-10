@@ -58,23 +58,19 @@ public:
 
 		fSpeed = 0.01;
 		
-		AddNode(new CGravObject("Sun",CVec3(0,0,0),CVec3(0,0,0),5000,0.3,2,-4,"th_sun","th_suncover",100));
+		AddNode(new CGravObject("Sun",CVec3(0,0,0),CVec3(0,0,0),50000,0.3,2,-4,"th_sun","th_suncover",100));
 
-		float gm = 5000*0.1;
+
+		IgnoreMode();
+
+		float gm = 50000*0.1;
 		float trail = 6;
 
-		for(int r =1; r <10; r+=2)
+		for(int r =1; r <100; r+=2)
 		{
 			float v = sqrt(gm/r);
 			AddNode(new CGravObject("HyperComet",CVec3(r,0,0),CVec3(0,v,0),1,0.013*10,2,-4,"nr2-bump","th_suncover",trail*r));
 			AddNode(new CGravObject("HyperComet",CVec3(-r,0,0),CVec3(0,-v,0),1,0.013*10,2,-4,"nr2-bump","th_suncover",trail*r));
-		}
-
-		for(int r =1; r <10; r+=2)
-		{
-			float v = sqrt(gm/r);
-			AddNode(new CGravObject("HyperComet",CVec3(0,r,0),CVec3(-v,0,0),1,0.013*10,2,-4,"nr2-bump","th_suncover",trail*r));
-			AddNode(new CGravObject("HyperComet",CVec3(0,-r,0),CVec3(v,0,0),1,0.013*10,2,-4,"nr2-bump","th_suncover",trail*r));
 		}
 
 		
