@@ -22,14 +22,6 @@ extern CTextureLoader* TexLoad = 0;
 
 CGravSimDlg::CGravSimDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CGravSimDlg::IDD, pParent)
-	, EditPosX(0)
-	, EditPosY(0)
-	, EditPosZ(0)
-	, EditVelX(0)
-	, EditVelY(0)
-	, EditVelZ(0)
-	, EditMass(0)
-	, EditRadius(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -300,14 +292,14 @@ void CGravSimDlg::OnBnClickedFocusbutton()
 
 void CGravSimDlg::OnBnClickedAddplanetbutton()
 {
-	//CVec3 Pos = m_SceneMgr.CurrentScene->NodeList[m_PlanetListCombo.GetCurSel()]->v3Pf; 
-	//CVec3 Vel = m_SceneMgr.CurrentScene->NodeList[m_PlanetListCombo.GetCurSel()]->v3Pi;
+/*	CVec3 Pos = m_SceneMgr.CurrentScene->NodeList[m_PlanetListCombo.GetCurSel()]->v3Pf; 
+	CVec3 Vel = m_SceneMgr.CurrentScene->NodeList[m_PlanetListCombo.GetCurSel()]->v3Pi;
 	UpdateData();
 	
-	//CVec3 Pos(EditPosX,EditPosY,EditPosZ);
-	//CVec3 Vel(EditVelX,EditVelY,EditVelZ);
-	//float Mass = EditMass;
-	//float Radius = EditRadius;
+	CVec3 Pos(EditPosX.get,EditPosY,EditPosZ);
+	CVec3 Vel(EditVelX,EditVelY,EditVelZ);
+	float Mass = EditMass;
+	float Radius = EditRadius;
 	float Trails = 100;
 
 	CVec3 Pos(10,10,10);
@@ -318,7 +310,7 @@ void CGravSimDlg::OnBnClickedAddplanetbutton()
 	m_SceneMgr.AddNode(new CGravObject("AddedObject",Pos,Vel,Mass,Radius,Trails));
 	UpdatePlanetList();
 
-
+*/
 }
 
 void CGravSimDlg::OnBnClickedUnfocusbutton()
