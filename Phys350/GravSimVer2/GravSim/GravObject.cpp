@@ -179,7 +179,7 @@ void CGravObject::DrawObject(void)
 		glRotatef(fRotPl,0,1.0f,0);
 		TexLoad->BindTexture(Texture);
 
-		renderSphere(fRadius,5);
+		renderSphere(fRadius,40);
 
 		TexLoad->UnBindTexture();
 		glPopMatrix();
@@ -192,7 +192,7 @@ void CGravObject::DrawObject(void)
 		glRotatef(fRotCl,0,1.0f,0);
 		TexLoad->BindTexture(Cloud);
 
-		renderSphere(fRadius*1.08,50);
+		renderSphere(fRadius*1.08,40);
 
 		TexLoad->UnBindTexture();
 		glPopMatrix();

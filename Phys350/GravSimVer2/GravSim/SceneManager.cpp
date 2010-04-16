@@ -9,9 +9,14 @@ CSceneManager::CSceneManager(void)
 	IsInit = false;
 	IsPaused = false;
 
+	AddScene(new TwoBody);
+	AddScene(new ThreeBody);	
+	AddScene(new BinaryStar);
+	AddScene(new CrazyBinaryStar);
 	AddScene(new SolarSystem);
 	AddScene(new WhateverScene);
 	AddScene(new BlackHole);
+	AddScene(new BlackHoleGalaxy);
 	CurrentScene = SceneList[0];
 }
 
